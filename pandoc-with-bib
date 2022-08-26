@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# set the paths to your bibliography-file and the folder containing
+# the csl-styles
+biblio="/path/to/your/bibfile.bib"
+csl_pwd="/path/to/folder/containing/csl-style-files"
+
+Run_pandoc_exec()
+{
+pandoc -s "$1" --citeproc --bibliography="$biblio" --csl="$csl_pwd""$3".csl -o "$2"
+}
+
+if [[ "$1" && "$2" && $# -eq 2 ]]; then
+    set "$1" "$2" "apa" # here "apa" defines the standard citation-style used if no third argument is passed. Change the name to your favored standard style using the filename WITHOUT .csl extension
+    Run_pandoc_exec "$1" "$2" "$3"
+elif [[ "$1" && "$2" && "$3" && $# -eq 3 ]]; then
+    if [ ! -f "$csl_pwd""$3".csl ]; then
+        echo ".csl style not found. Please download the style mentioned to
+$csl_pwd,
+select another style, or leave the argument blank for using APA-style."
+        exit
+    fi
+    Run_pandoc_exec "$1" "$2" "$3"
+elif [[ $# -lt 2 || $# -gt 3 ]]; then
+    echo "Too less or many arguments. No pandoc-command will be executed."
+    exit
+fi
+

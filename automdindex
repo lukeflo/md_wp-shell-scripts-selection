@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [[ "$1" && $# -eq 1 ]]; then
+    titel=$1
+elif [ $# -eq 0 ]; then
+    titel=index
+elif [ $# -gt 1 ]; then
+    echo 'Zu viele Parameter. Bitte gib einen Parameter mit dem Titelnamen der Indexdatei an, oder keinen für den Standardwert "index".'
+    exit
+fi
+
+echo "# $titel
+
+" > $titel.md
+
+for link in ./*.md; do
+    echo "* [[${link#*/}]]" >> $titel.md
+done

@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Name index-file (without file-extension). if the parameter is left blank, the file is named "index.md".
+
+if [[ "$1" && $# -eq 1 ]]; then
+    title=$1
+elif [ $# -eq 0 ]; then
+    title=index
+elif [ $# -gt 1 ]; then
+    echo 'Too many parameters. Please specify a parameter with the title name of the index file, or none for the default value "index".'
+    exit
+fi
+
+# create file with title
+echo "# $title
+
+" > $title.md
+
+# search for directories as well as subdirectories and put them into array
+mapfile -t directories < <( find ./* -type d )
+
+# echo directories to check content of array
+# echo "${directories[@]}"
+
+# create a subsection for every directory and create a list of .md files indluded. Both in Markdown-Syntax with Wikilinks for the files
+for directory in "${directories[@]}"; do
+    echo " "
+    echo "## ${directory#*/}"
+        for files in $directory/*.md; do
+            echo "* [[${files##*/}]]"
+        done
+    echo " "
+done >> $title.md
