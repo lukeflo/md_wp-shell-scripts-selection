@@ -37,7 +37,7 @@ In order for it to run without errors, the directory paths to the bibliography a
 
 # License
 
-All scripts are licensed under GNU GPLv3.
+All scripts are licensed under [GNU GPLv3](https://github.com/lukeflo/md_wp-shell-scripts-selection/blob/main/LICENSE.md).
 These programms come with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it
 under certain conditions.
